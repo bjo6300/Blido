@@ -30,10 +30,10 @@ public class PresentationService {
   }
 
   @Transactional
-  public PresentationResponse updatePresentation(
+  public PresentationResponse updatePresentation(Long presentationId,
       PresentationUpdateRequest presentationUpdateRequest) {
 
-    Presentation foundPresentation = presentationRepository.findById(presentationUpdateRequest.id())
+    Presentation foundPresentation = presentationRepository.findById(presentationId)
         .orElseThrow(EntityNotFoundException::new);
 
     foundPresentation.update(presentationUpdateRequest);

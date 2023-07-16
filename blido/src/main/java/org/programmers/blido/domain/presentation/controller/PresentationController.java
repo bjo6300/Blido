@@ -33,20 +33,21 @@ public class PresentationController {
         .body(presentationService.createPresentation(presentationCreateRequest));
   }
 
-  @PutMapping("/presentations")
+  @PutMapping("/presentations/{presentationId}")
   public ResponseEntity<PresentationResponse> updatePresentation(
+      @Valid @PathVariable Long presentationId,
       @Valid @RequestBody PresentationUpdateRequest presentationUpdateRequest) {
 
     return ResponseEntity.status(HttpStatus.OK)
-        .body(presentationService.updatePresentation(presentationUpdateRequest));
+        .body(presentationService.updatePresentation(presentationId, presentationUpdateRequest));
   }
 
   @DeleteMapping("/presentations/{presentationId}")
-  public ResponseEntity<String> deletePresentation(@PathVariable Long presentationId) {
+  public ResponseEntity<String> deletePresentation(@Valid @PathVariable Long presentationId) {
 
     presentationService.deletePresentation(presentationId);
 
-    return ResponseEntity.status(HttpStatus.NO_CONTENT)
+    return ResponseEntity.status(HttpStatus.OK)
         .body(presentationId + "가 삭제되었습니다.");
   }
 

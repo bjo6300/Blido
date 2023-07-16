@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Builder
 public record PresentationUpdateRequest(
-    @NotNull Long id,
     @NotBlank String title,
     @NotNull @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") LocalDateTime startAt,
     @NotNull @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") LocalDateTime endAt) {
