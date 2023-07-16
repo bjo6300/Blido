@@ -2,7 +2,7 @@ package org.programmers.blido.domain.presentation.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.programmers.blido.domain.presentation.Presentation;
-import org.programmers.blido.domain.presentation.dto.request.PresentationCreateRequest;
+import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
 import org.programmers.blido.domain.presentation.dto.response.PresentationResponse;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PresentationMapper {
 
-  public Presentation toEntity(PresentationCreateRequest presentationCreateRequest) {
+  public Presentation toEntity(PresentationRequest presentationRequest) {
     return Presentation.builder()
-        .title(presentationCreateRequest.title())
-        .startAt(presentationCreateRequest.startAt())
-        .endAt(presentationCreateRequest.endAt())
+        .title(presentationRequest.title())
+        .startAt(presentationRequest.startAt())
+        .endAt(presentationRequest.endAt())
         .build();
   }
 

@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.programmers.blido.domain.presentation.Presentation;
 import org.programmers.blido.domain.presentation.dto.mapper.PresentationMapper;
-import org.programmers.blido.domain.presentation.dto.request.PresentationCreateRequest;
-import org.programmers.blido.domain.presentation.dto.request.PresentationUpdateRequest;
+import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
 import org.programmers.blido.domain.presentation.dto.response.PresentationResponse;
 import org.programmers.blido.domain.presentation.repository.PresentationRepository;
 import org.springframework.stereotype.Service;
@@ -22,21 +21,21 @@ public class PresentationService {
 
   @Transactional
   public PresentationResponse createPresentation(
-      PresentationCreateRequest presentationCreateRequest) {
+      PresentationRequest presentationRequest) {
 
-    Presentation presentation = presentationMapper.toEntity(presentationCreateRequest);
+    Presentation presentation = presentationMapper.toEntity(presentationRequest);
 
     return presentationMapper.toResponse(presentationRepository.save(presentation));
   }
 
   @Transactional
   public PresentationResponse updatePresentation(Long presentationId,
-      PresentationUpdateRequest presentationUpdateRequest) {
+      PresentationRequest presentationRequest) {
 
     Presentation foundPresentation = presentationRepository.findById(presentationId)
         .orElseThrow(EntityNotFoundException::new);
 
-    foundPresentation.update(presentationUpdateRequest);
+    foundPresentation.update(presentationRequest);
 
     return presentationMapper.toResponse(presentationRepository.save(foundPresentation));
   }

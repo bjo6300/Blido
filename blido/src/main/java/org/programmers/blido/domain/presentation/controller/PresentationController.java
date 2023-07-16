@@ -2,8 +2,7 @@ package org.programmers.blido.domain.presentation.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.programmers.blido.domain.presentation.dto.request.PresentationCreateRequest;
-import org.programmers.blido.domain.presentation.dto.request.PresentationUpdateRequest;
+import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
 import org.programmers.blido.domain.presentation.dto.response.PresentationResponse;
 import org.programmers.blido.domain.presentation.service.PresentationService;
 import org.springframework.http.HttpStatus;
@@ -27,19 +26,19 @@ public class PresentationController {
 
   @PostMapping(path = "/presentations", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PresentationResponse> createPresentation(
-      @Valid @RequestBody PresentationCreateRequest presentationCreateRequest) {
+      @Valid @RequestBody PresentationRequest presentationRequest) {
 
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(presentationService.createPresentation(presentationCreateRequest));
+        .body(presentationService.createPresentation(presentationRequest));
   }
 
   @PutMapping("/presentations/{presentationId}")
   public ResponseEntity<PresentationResponse> updatePresentation(
       @Valid @PathVariable Long presentationId,
-      @Valid @RequestBody PresentationUpdateRequest presentationUpdateRequest) {
+      @Valid @RequestBody PresentationRequest presentationRequest) {
 
     return ResponseEntity.status(HttpStatus.OK)
-        .body(presentationService.updatePresentation(presentationId, presentationUpdateRequest));
+        .body(presentationService.updatePresentation(presentationId, presentationRequest));
   }
 
   @DeleteMapping("/presentations/{presentationId}")

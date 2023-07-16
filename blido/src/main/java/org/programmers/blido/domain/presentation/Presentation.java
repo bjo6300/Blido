@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.programmers.blido.domain.presentation.dto.request.PresentationUpdateRequest;
+import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
@@ -55,9 +55,9 @@ public class Presentation {
     this.endAt = endAt;
   }
 
-  public void update(PresentationUpdateRequest presentationUpdateRequest) {
-    this.title = presentationUpdateRequest.title();
-    this.startAt = presentationUpdateRequest.startAt();
-    this.endAt = presentationUpdateRequest.endAt();
+  public void update(PresentationRequest presentationRequest) {
+    this.title = presentationRequest.title();
+    this.startAt = presentationRequest.startAt();
+    this.endAt = presentationRequest.endAt();
   }
 }
