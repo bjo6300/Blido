@@ -14,13 +14,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "presentation")
-@SQLDelete(sql = "UPDATE presentation set deleted = true where id=?")
+@Where(clause = "isDeleted = false")
+@SQLDelete(sql = "update presentation set is_deleted = true where id=?")
 public class Presentation {
 
   @Id
@@ -41,6 +43,9 @@ public class Presentation {
   @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime endAt;
+
+  @Column(name = "is_deleted", nullable = false)
+  private boolean isDeleted;
 
   @Builder
   public Presentation(String title, LocalDateTime startAt, LocalDateTime endAt) {
