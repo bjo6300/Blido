@@ -40,4 +40,13 @@ public class PresentationService {
 
     return presentationMapper.toResponse(presentationRepository.save(foundPresentation));
   }
+
+  @Transactional
+  public void deletePresentation(Long presentationId) {
+
+    Presentation foundPresentation = presentationRepository.findById(presentationId)
+        .orElseThrow(EntityNotFoundException::new);
+
+    presentationRepository.delete(foundPresentation);
+  }
 }

@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "presentation")
 @Where(clause = "is_deleted = false")
-@SQLDelete(sql = "update presentation set is_deleted = true where id=?")
+@SQLDelete(sql = "update presentation set is_deleted = true where presentation_id = ?")
 public class Presentation {
 
   @Id

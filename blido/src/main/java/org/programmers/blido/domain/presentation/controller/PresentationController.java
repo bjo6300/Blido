@@ -9,6 +9,8 @@ import org.programmers.blido.domain.presentation.service.PresentationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,12 +33,22 @@ public class PresentationController {
   }
 
   @PutMapping("/presentations")
-  public ResponseEntity<PresentationResponse> updateTask(
+  public ResponseEntity<PresentationResponse> updatePresentation(
       @Valid @RequestBody PresentationUpdateRequest presentationUpdateRequest) {
+
     PresentationResponse presentationResponse = presentationService.updatePresentation(
         presentationUpdateRequest);
 
     return ResponseEntity.status(HttpStatus.OK)
         .body(presentationResponse);
+  }
+
+  @DeleteMapping("/presentations/{presentationId}")
+  public ResponseEntity<String> deletePresentation(@PathVariable Long presentationId) {
+
+    presentationService.deletePresentation(presentationId);
+
+    return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        .body(presentationId + "가 삭제되었습니다.");
   }
 }
