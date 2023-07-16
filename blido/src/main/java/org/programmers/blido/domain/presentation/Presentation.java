@@ -15,13 +15,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.programmers.blido.domain.presentation.dto.request.PresentationUpdateRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "presentation")
-@Where(clause = "isDeleted = false")
+@Where(clause = "is_deleted = false")
 @SQLDelete(sql = "update presentation set is_deleted = true where id=?")
 public class Presentation {
 
@@ -52,5 +53,11 @@ public class Presentation {
     this.title = title;
     this.startAt = startAt;
     this.endAt = endAt;
+  }
+
+  public void update(PresentationUpdateRequest presentationUpdateRequest) {
+    this.title = presentationUpdateRequest.title();
+    this.startAt = presentationUpdateRequest.startAt();
+    this.endAt = presentationUpdateRequest.endAt();
   }
 }
