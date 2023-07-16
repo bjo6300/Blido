@@ -1,4 +1,4 @@
-package org.programmers.blido.domain.presentation.dto.request;
+package org.programmers.blido.domain.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;

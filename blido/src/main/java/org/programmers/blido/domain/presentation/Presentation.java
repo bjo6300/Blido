@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
+import org.programmers.blido.domain.presentation.dto.PresentationRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter

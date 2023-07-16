@@ -1,9 +1,7 @@
-package org.programmers.blido.domain.presentation.dto.mapper;
+package org.programmers.blido.domain.presentation.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.programmers.blido.domain.presentation.Presentation;
-import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
-import org.programmers.blido.domain.presentation.dto.response.PresentationResponse;
 import org.springframework.stereotype.Component;
 
 @Component

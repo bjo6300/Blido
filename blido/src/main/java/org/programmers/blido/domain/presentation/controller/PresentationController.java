@@ -2,8 +2,8 @@ package org.programmers.blido.domain.presentation.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.programmers.blido.domain.presentation.dto.request.PresentationRequest;
-import org.programmers.blido.domain.presentation.dto.response.PresentationResponse;
+import org.programmers.blido.domain.presentation.dto.PresentationRequest;
+import org.programmers.blido.domain.presentation.dto.PresentationResponse;
 import org.programmers.blido.domain.presentation.service.PresentationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

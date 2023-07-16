@@ -1,4 +1,4 @@
-package org.programmers.blido.domain.presentation.dto.response;
+package org.programmers.blido.domain.presentation.dto;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
