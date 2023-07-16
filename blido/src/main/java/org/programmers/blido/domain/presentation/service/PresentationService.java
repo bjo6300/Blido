@@ -2,7 +2,6 @@ package org.programmers.blido.domain.presentation.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.programmers.blido.domain.presentation.Presentation;
 import org.programmers.blido.domain.presentation.dto.PresentationMapper;
 import org.programmers.blido.domain.presentation.dto.PresentationRequest;
@@ -11,9 +10,9 @@ import org.programmers.blido.domain.presentation.repository.PresentationReposito
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
+
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class PresentationService {
 
   private final PresentationRepository presentationRepository;
