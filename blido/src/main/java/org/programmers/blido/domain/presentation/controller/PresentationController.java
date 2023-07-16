@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,11 +37,8 @@ public class PresentationController {
   public ResponseEntity<PresentationResponse> updatePresentation(
       @Valid @RequestBody PresentationUpdateRequest presentationUpdateRequest) {
 
-    PresentationResponse presentationResponse = presentationService.updatePresentation(
-        presentationUpdateRequest);
-
     return ResponseEntity.status(HttpStatus.OK)
-        .body(presentationResponse);
+        .body(presentationService.updatePresentation(presentationUpdateRequest));
   }
 
   @DeleteMapping("/presentations/{presentationId}")
@@ -50,5 +48,13 @@ public class PresentationController {
 
     return ResponseEntity.status(HttpStatus.NO_CONTENT)
         .body(presentationId + "가 삭제되었습니다.");
+  }
+
+  @GetMapping("/presentations/{presentationId}")
+  public ResponseEntity<PresentationResponse> getPresentation(
+      @Valid @PathVariable Long presentationId) {
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(presentationService.getPresentation(presentationId));
   }
 }

@@ -49,4 +49,13 @@ public class PresentationService {
 
     presentationRepository.delete(foundPresentation);
   }
+
+  @Transactional(readOnly = true)
+  public PresentationResponse getPresentation(Long presentationId) {
+
+    Presentation foundPresentation = presentationRepository.findById(presentationId)
+        .orElseThrow(EntityNotFoundException::new);
+
+    return presentationMapper.toResponse(foundPresentation);
+  }
 }
