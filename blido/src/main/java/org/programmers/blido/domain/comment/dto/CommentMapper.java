@@ -20,10 +20,12 @@ public class CommentMapper {
 
   public CommentResponse toResponse(Comment comment) {
     return CommentResponse.builder()
+        .commentId(comment.getId())
         .presentationId(comment.getPresentation().getId())
         .writer(comment.getWriter())
         .content(comment.getContent())
         .isChecked(comment.getIsChecked())
+        .createdDate(comment.getCreatedDate())
         .build();
   }
 }

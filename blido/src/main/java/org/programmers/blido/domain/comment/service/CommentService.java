@@ -1,6 +1,7 @@
 package org.programmers.blido.domain.comment.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.programmers.blido.domain.comment.Comment;
 import org.programmers.blido.domain.comment.dto.CommentMapper;
@@ -66,5 +67,13 @@ public class CommentService {
         .orElseThrow(EntityNotFoundException::new);
 
     return commentMapper.toResponse(foundComment);
+  }
+
+  @Transactional(readOnly = true)
+  public List<CommentResponse> getLatestComments(Long presentationId) {
+    return commentRepository.findCommentsByPresentationIdOrderByCreatedDate(presentationId)
+        .stream()
+        .map(commentMapper::toResponse)
+        .toList();
   }
 }

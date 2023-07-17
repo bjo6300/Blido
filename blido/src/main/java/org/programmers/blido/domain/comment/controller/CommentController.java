@@ -1,6 +1,7 @@
 package org.programmers.blido.domain.comment.controller;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.programmers.blido.domain.comment.dto.CommentRequest;
 import org.programmers.blido.domain.comment.dto.CommentResponse;
@@ -63,5 +64,13 @@ public class CommentController {
 
     return ResponseEntity.status(HttpStatus.OK)
         .body(commentService.getComment(commentId));
+  }
+
+  @GetMapping("/comments/list/latest/{presentationId}")
+  public ResponseEntity<List<CommentResponse>> getLatestComments(
+      @Valid @PathVariable Long presentationId) {
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(commentService.getLatestComments(presentationId));
   }
 }
