@@ -58,4 +58,13 @@ public class CommentService {
 
     commentRepository.deleteById(commentId);
   }
+
+  @Transactional(readOnly = true)
+  public CommentResponse getComment(Long commentId) {
+
+    Comment foundComment = commentRepository.findById(commentId)
+        .orElseThrow(EntityNotFoundException::new);
+
+    return commentMapper.toResponse(foundComment);
+  }
 }
