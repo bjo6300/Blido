@@ -73,4 +73,12 @@ public class CommentController {
     return ResponseEntity.status(HttpStatus.OK)
         .body(commentService.getLatestComments(presentationId));
   }
+
+  @GetMapping("/comments/list/checked/{presentationId}")
+  public ResponseEntity<List<CommentResponse>> getCheckedComments(
+      @Valid @PathVariable Long presentationId) {
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(commentService.getCheckedComments(presentationId));
+  }
 }

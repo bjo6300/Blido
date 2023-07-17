@@ -76,4 +76,12 @@ public class CommentService {
         .map(commentMapper::toResponse)
         .toList();
   }
+
+  @Transactional(readOnly = true)
+  public List<CommentResponse> getCheckedComments(Long presentationId) {
+    return commentRepository.findCommentsByPresentationIdAndIsCheckedOrCreatedDate(presentationId)
+        .stream()
+        .map(commentMapper::toResponse)
+        .toList();
+  }
 }
