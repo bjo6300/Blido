@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.programmers.blido.domain.comment.dto.CommentRequest;
 import org.programmers.blido.domain.presentation.Presentation;
 import org.programmers.blido.global.BaseTimeEntity;
 
@@ -40,7 +41,7 @@ public class Comment extends BaseTimeEntity {
 
   @Column(nullable = false)
   @NotBlank
-  private String name;
+  private String writer;
 
   @Column(nullable = false)
   @NotBlank
@@ -53,15 +54,24 @@ public class Comment extends BaseTimeEntity {
   private boolean isDeleted;
 
   @Builder
-  public Comment(Presentation presentation, String name, String content, Boolean isChecked) {
+  public Comment(Presentation presentation, String writer, String content, Boolean isChecked) {
     this.presentation = presentation;
-    this.name = name;
+    this.writer = writer;
     this.content = content;
     this.isChecked = isChecked;
   }
 
   @PrePersist
   public void prePersist() {
-    this.name = Objects.equals(this.name, "") ? "익명" : this.name;
+    this.writer = Objects.equals(this.writer, "") ? "익명" : this.writer;
+  }
+
+  public void update(CommentRequest commentRequest) {
+    this.writer = commentRequest.writer();
+    this.content = commentRequest.content();
+  }
+
+  public void check() {
+    this.isChecked = !this.isChecked;
   }
 }

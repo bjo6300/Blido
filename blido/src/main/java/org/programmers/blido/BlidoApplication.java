@@ -11,5 +11,4 @@ public class BlidoApplication {
   public static void main(String[] args) {
     SpringApplication.run(BlidoApplication.class, args);
   }
-
 }

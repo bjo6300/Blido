@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record CommentRequest(@NotNull Long presentationId,
-                             String name,
+                             String writer,
                              @NotBlank String content,
                              @NotNull Boolean isChecked
 ) {

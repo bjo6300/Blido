@@ -12,7 +12,7 @@ public class CommentMapper {
   public Comment toEntity(Presentation presentation, CommentRequest commentRequest) {
     return Comment.builder()
         .presentation(presentation)
-        .name(commentRequest.name())
+        .writer(commentRequest.writer())
         .content(commentRequest.content())
         .isChecked(commentRequest.isChecked())
         .build();
@@ -20,8 +20,8 @@ public class CommentMapper {
 
   public CommentResponse toResponse(Comment comment) {
     return CommentResponse.builder()
-        .presentation(comment.getPresentation())
-        .name(comment.getName())
+        .presentationId(comment.getPresentation().getId())
+        .writer(comment.getWriter())
         .content(comment.getContent())
         .isChecked(comment.getIsChecked())
         .build();
