@@ -8,17 +8,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.programmers.blido.domain.presentation.Presentation;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.programmers.blido.global.BaseTimeEntity;
 
 @Getter
 @Entity
@@ -26,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Where(clause = "is_deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "update comment set is_deleted = true where presentation_id = ?")
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,13 +47,21 @@ public class Comment {
   private String content;
 
   @Column(name = "is_checked", nullable = false)
-  private boolean isChecked;
-
-  @Column(nullable = false)
-  @NotNull
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-  private LocalDateTime createAt;
+  private Boolean isChecked;
 
   @Column(name = "is_deleted", nullable = false)
   private boolean isDeleted;
+
+  @Builder
+  public Comment(Presentation presentation, String name, String content, Boolean isChecked) {
+    this.presentation = presentation;
+    this.name = name;
+    this.content = content;
+    this.isChecked = isChecked;
+  }
+
+  @PrePersist
+  public void prePersist() {
+    this.name = Objects.equals(this.name, "") ? "익명" : this.name;
+  }
 }
