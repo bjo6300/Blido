@@ -22,6 +22,7 @@ public class CommentService {
 
   @Transactional
   public CommentResponse createComment(CommentRequest commentRequest) {
+
     Presentation foundPresentation = presentationRepository.findById(
         commentRequest.presentationId()).orElseThrow(EntityNotFoundException::new);
 
@@ -32,6 +33,7 @@ public class CommentService {
 
   @Transactional
   public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
+
     Comment foundComment = commentRepository.findById(commentId)
         .orElseThrow(EntityNotFoundException::new);
 
@@ -42,11 +44,18 @@ public class CommentService {
 
   @Transactional
   public CommentResponse checkComment(Long commentId) {
+
     Comment foundComment = commentRepository.findById(commentId)
         .orElseThrow(EntityNotFoundException::new);
 
     foundComment.check();
 
     return commentMapper.toResponse(commentRepository.save(foundComment));
+  }
+
+  @Transactional
+  public void deleteComment(Long commentId) {
+
+    commentRepository.deleteById(commentId);
   }
 }
