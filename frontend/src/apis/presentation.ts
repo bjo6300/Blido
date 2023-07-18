@@ -22,6 +22,6 @@ export const deletePresentation = async (id: number) => {
 };
 
 export const getPresentationList = async () => {
-    const res = await baseAxios.get("presentations/list?page=0&size=10");
-    return res.data;
-  };
+  const res = await baseAxios.get("presentations/list?page=0&size=10");
+  return res.data;
+};
