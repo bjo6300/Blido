@@ -45,7 +45,10 @@ public class PresentationService {
   @Transactional
   public void deletePresentation(Long presentationId) {
 
-    presentationRepository.deleteById(presentationId);
+    Presentation foundPresentation = presentationRepository.findById(presentationId)
+        .orElseThrow(EntityNotFoundException::new);
+
+    foundPresentation.delete();
   }
 
   @Transactional(readOnly = true)

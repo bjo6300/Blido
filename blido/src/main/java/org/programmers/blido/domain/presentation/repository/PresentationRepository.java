@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
-  @Query(nativeQuery = true, value = "select * from presentation order by presentation_id")
+  @Query(nativeQuery = true, value = "select * from presentation where is_deleted = false order by presentation_id")
   Page<Presentation> findPresentationsByIdOrderById(Pageable pageable);
 }

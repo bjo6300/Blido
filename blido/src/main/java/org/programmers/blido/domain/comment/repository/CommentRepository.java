@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+  @Query(nativeQuery = true, value = "select * from comment where presentation_id = :presentationId and is_deleted = false order by created_date")
   List<Comment> findCommentsByPresentationIdOrderByCreatedDate(Long presentationId);
 
-  @Query(nativeQuery = true, value = "select * from comment where presentation_id = :presentationId and is_checked = true and is_deleted = false order by created_date")
+  @Query(nativeQuery = true, value = "select * from comment where presentation_id = :presentationId and is_checked = false and is_deleted = false order by created_date")
   List<Comment> findCommentsByPresentationIdAndIsCheckedOrCreatedDate(Long presentationId);
 }

@@ -60,4 +60,8 @@ public class Presentation {
     this.startAt = presentationRequest.startAt();
     this.endAt = presentationRequest.endAt();
   }
+
+  public void delete() {
+    this.isDeleted = true;
+  }
 }

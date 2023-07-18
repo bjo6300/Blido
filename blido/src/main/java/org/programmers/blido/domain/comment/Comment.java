@@ -74,4 +74,8 @@ public class Comment extends BaseTimeEntity {
   public void check() {
     this.isChecked = !this.isChecked;
   }
+
+  public void delete() {
+    this.isDeleted = true;
+  }
 }

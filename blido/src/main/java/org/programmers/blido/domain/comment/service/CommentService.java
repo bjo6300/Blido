@@ -57,7 +57,10 @@ public class CommentService {
   @Transactional
   public void deleteComment(Long commentId) {
 
-    commentRepository.deleteById(commentId);
+    Comment foundComment = commentRepository.findById(commentId)
+        .orElseThrow(EntityNotFoundException::new);
+
+    foundComment.delete();
   }
 
   @Transactional(readOnly = true)
