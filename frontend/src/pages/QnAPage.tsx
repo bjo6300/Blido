@@ -1,56 +1,43 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    Checkbox,
-    FormControl,
-    Stack,
-    Textarea,
-    Typography,
-  } from "@mui/joy";
-  
-  function QnAPage() {
-    return (
-      <Box sx={{ width: "100%" }}>
-        <Stack>
-          <FormControl>
-            <Textarea
-              placeholder="Type something here…"
-              minRows={3}
-              endDecorator={
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "var(--Textarea-paddingBlock)",
-                    pt: "var(--Textarea-paddingBlock)",
-                    borderTop: "1px solid",
-                    borderColor: "divider",
-                    flex: "auto",
-                  }}
-                >
-                  <Button sx={{ marginLeft: "auto" }}>댓글 달기</Button>
-                </Box>
-              }
-            />
-          </FormControl>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <Avatar aria-hidden="true" variant="solid"></Avatar>
-            <Typography level="h4">익명의 사람</Typography>
-            <Checkbox sx={{ marginLeft: "auto" }} />
-          </Box>
-          <Typography level="body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-            consectetur, quas harum delectus laudantium ipsum iusto quos quasi
-            optio amet eveniet reprehenderit distinctio rem vitae velit nihil eos
-            voluptas odio.
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <Button color="primary">수정</Button>
-            <Button color="danger">삭제</Button>
-          </Box>
-        </Stack>
-      </Box>
-    );
-  }
-  
-  export default QnAPage;
+import { Box, Stack } from "@mui/joy";
+import TabBox from "../components/TabBox";
+import CommentListBox from "../components/CommentListBox";
+import CommentFormBox from "../components/CommentFormBox";
+import { useEffect, useState } from "react";
+import { getCommentListLatest } from "../apis/comment";
+import { useParams } from "react-router-dom";
+import { CommentType } from "../types/comment";
+
+function QnAPage() {
+  // 경로 params 받아오기
+  const { id } = useParams();
+
+  const [comments, setComments] = useState<CommentType[]>([
+    {
+      commentId: 1,
+      presentationId: 0,
+      content: "",
+      writer: "",
+      isChecked: false,
+      createdDate: "",
+    },
+  ]);
+
+  console.log(comments);
+  useEffect(() => {
+    getCommentListLatest(+id!).then((res) => {
+      setComments(res.data);
+    });
+  }, []);
+
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Stack>
+        <CommentFormBox id={id || "0"} setComments={setComments} />
+        <TabBox setComments={setComments} id={id || "0"} />
+        <CommentListBox comments={comments} setComments={setComments} />
+      </Stack>
+    </Box>
+  );
+}
+
+export default QnAPage;
