@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   IconButton,
   List,
@@ -11,12 +12,7 @@ import {
 import { PresentationType } from "../../types/presentation";
 import { useNavigate } from "react-router-dom";
 import { deletePresentation } from "../../apis/presentation";
-import {
-  Delete,
-  Home,
-  KeyboardArrowRight,
-  QuestionAnswer,
-} from "@mui/icons-material";
+import { Delete, QuestionAnswer } from "@mui/icons-material";
 
 type PresentationListBoxProps = {
   presentations: PresentationType[];
@@ -43,52 +39,58 @@ function PresentationListBox({
       <Typography sx={{ marginBottom: "0.5rem" }} level="h3">
         질문 리스트
       </Typography>
-      <List sx={{ gap: "1rem" }}>
-        {presentations?.map((presentation) => (
-          <ListItem key={presentation.id}>
-            <ListItemButton
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-                paddingTop: "0.5rem",
-              }}
-              variant="soft"
-              onClick={() => {
-                navigate(`/qna/${presentation.id}`);
-              }}
-            >
-              <Box sx={{ display: "flex", width: "100%" }}>
-                <ListItemDecorator sx={{ alignSelf: "start" }}>
-                  <QuestionAnswer />
-                </ListItemDecorator>
-                <ListItemContent sx={{ alignSelf: "center", fontSize: "lg" }}>
-                  {presentation.title}
-                </ListItemContent>
-                <IconButton
-                  sx={{ marginLeft: "auto", alignSelf: "start" }}
-                  aria-label="Delete"
-                  size="sm"
-                  color="danger"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClickDeletePresentation(presentation.id);
-                  }}
-                >
-                  <Delete />
-                </IconButton>
-              </Box>
-              <Typography>
-                {`${new Date(
-                  presentation.startAt
-                ).toLocaleDateString()} ~ ${new Date(
-                  presentation.endAt
-                ).toLocaleDateString()}`}
-              </Typography>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      {presentations.length === 0 ? (
+        <Alert size="lg" sx={{ marginTop: "1rem" }}>
+          질문이 없습니다. 질문을 생성해주세요.
+        </Alert>
+      ) : (
+        <List sx={{ gap: "1rem" }}>
+          {presentations?.map((presentation) => (
+            <ListItem key={presentation.id}>
+              <ListItemButton
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                  paddingTop: "0.5rem",
+                }}
+                variant="soft"
+                onClick={() => {
+                  navigate(`/qna/${presentation.id}`);
+                }}
+              >
+                <Box sx={{ display: "flex", width: "100%" }}>
+                  <ListItemDecorator sx={{ alignSelf: "start" }}>
+                    <QuestionAnswer />
+                  </ListItemDecorator>
+                  <ListItemContent sx={{ alignSelf: "center", fontSize: "lg" }}>
+                    {presentation.title}
+                  </ListItemContent>
+                  <IconButton
+                    sx={{ marginLeft: "auto", alignSelf: "start" }}
+                    aria-label="Delete"
+                    size="sm"
+                    color="danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleClickDeletePresentation(presentation.id);
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
+                </Box>
+                <Typography>
+                  {`${new Date(
+                    presentation.startAt
+                  ).toLocaleDateString()} ~ ${new Date(
+                    presentation.endAt
+                  ).toLocaleDateString()}`}
+                </Typography>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Box>
   );
 }

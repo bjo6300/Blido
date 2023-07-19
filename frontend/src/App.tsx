@@ -10,8 +10,7 @@ function App() {
         justifyContent: "center",
         alignItems: "center",
         maxWidth: "600px",
-        margin: "0 auto",
-        marginTop: "5rem",
+        margin: "4rem auto",
       }}
     >
       <h1>QnA</h1>

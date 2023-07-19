@@ -1,6 +1,9 @@
-import { Box, Button, Tab, TabList, Tabs, tabClasses } from "@mui/joy";
-import { CommentType } from "../types/comment";
-import { getCommentListChecked, getCommentListLatest } from "../apis/comment";
+import { Tab, TabList, Tabs, tabClasses } from "@mui/joy";
+import { CommentType } from "../../types/comment";
+import {
+  getCommentListChecked,
+  getCommentListLatest,
+} from "../../apis/comment";
 
 type TabBoxProps = {
   id: string;
@@ -48,7 +51,7 @@ function TabBox({ setComments, id }: TabBoxProps) {
         }}
       >
         <Tab>최근</Tab>
-        <Tab>체크</Tab>
+        <Tab>미응답</Tab>
       </TabList>
     </Tabs>
   );

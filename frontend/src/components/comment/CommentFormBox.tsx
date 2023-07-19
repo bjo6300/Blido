@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, FormControl, Input, Textarea } from "@mui/joy";
-import { CommentType } from "../types/comment";
+import { CommentType } from "../../types/comment";
 import { useState } from "react";
-import { postComment } from "../apis/comment";
+import { postComment } from "../../apis/comment";
 
 type CommentFormBoxProps = {
   id: string;
@@ -14,7 +14,7 @@ function CommentFormBox({ id, setComments }: CommentFormBoxProps) {
     writer: "",
   });
 
-  const handleChangeForm = (
+  const handleChangeCommentForm = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
@@ -24,9 +24,9 @@ function CommentFormBox({ id, setComments }: CommentFormBoxProps) {
     });
   };
 
-  const createComment = async () => {
-    const form: CommentType = {
-      presentationId: id ? Number(id) : 0,
+  const handleClickCreateComment = async () => {
+    const form: Omit<CommentType, "commentId" | "createdDate"> = {
+      presentationId: Number(id!),
       writer: commentForm.writer,
       isChecked: false,
       content: commentForm.content,
@@ -43,11 +43,11 @@ function CommentFormBox({ id, setComments }: CommentFormBoxProps) {
   return (
     <FormControl>
       <Textarea
-        placeholder="Type something here…"
+        placeholder="궁금하신 내용을 입력해주세요.."
         minRows={3}
         name="content"
         value={commentForm.content}
-        onChange={handleChangeForm}
+        onChange={handleChangeCommentForm}
         endDecorator={
           <Box
             sx={{
@@ -66,7 +66,7 @@ function CommentFormBox({ id, setComments }: CommentFormBoxProps) {
               variant="soft"
               name="writer"
               value={commentForm.writer}
-              onChange={handleChangeForm}
+              onChange={handleChangeCommentForm}
               sx={{
                 "--Input-radius": "0px",
                 borderBottom: "2px solid",
@@ -92,7 +92,7 @@ function CommentFormBox({ id, setComments }: CommentFormBoxProps) {
             <Button
               disabled={commentForm.content === ""}
               sx={{ marginLeft: "auto" }}
-              onClick={createComment}
+              onClick={handleClickCreateComment}
             >
               댓글 달기
             </Button>

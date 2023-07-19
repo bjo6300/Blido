@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Checkbox, Input, Typography } from "@mui/joy";
-import { CommentType } from "../types/comment";
-import { deleteComment, putComment, putCommentCheck } from "../apis/comment";
+import { CommentType } from "../../types/comment";
+import { deleteComment, putComment, putCommentCheck } from "../../apis/comment";
 import { useState } from "react";
 
 type CommentBoxProps = {
@@ -28,13 +28,14 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
   };
 
   const handleUpdate = async (id: number) => {
-    const form: CommentType = {
+    const form: Omit<CommentType, "commentId" | "createdDate"> = {
       presentationId: comment.presentationId,
       content: editContent,
       writer: comment.writer,
       isChecked: comment.isChecked,
     };
     const res = await putComment(id, form);
+    console.log(res);
     setComments((prev) =>
       prev.map((comment) =>
         comment.commentId === id ? { ...res.data } : comment
@@ -51,13 +52,15 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
         gap: "1rem",
         border: "1px solid #B9B9C6",
         borderRadius: "1rem",
-        padding: "2rem",
+        padding: "1.3rem",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <Avatar aria-hidden="true" variant="solid"></Avatar>
         <Typography level="h4">{comment.writer}</Typography>
+
         <Checkbox
+          variant="soft"
           sx={{ marginLeft: "auto" }}
           size="lg"
           checked={comment.isChecked}
@@ -105,12 +108,12 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
         }}
       >
         <Typography level="body2">
-          {comment.createdDate?.split("T")[0]}
+          {new Date(comment.createdDate).toLocaleTimeString().slice(0, -3)}
         </Typography>
         {isUpdate ? (
           <>
             <Button
-              color="primary"
+              color="success"
               onClick={() => {
                 handleUpdate(comment.commentId!);
               }}
@@ -118,7 +121,7 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
               완료
             </Button>
             <Button
-              color="danger"
+              color="warning"
               onClick={() => {
                 setEditContent(comment.content);
                 setIsUpdate((pre) => !pre);
