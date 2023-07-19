@@ -55,7 +55,7 @@ public class CommentController {
 
     commentService.deleteComment(commentId);
     return ResponseEntity.status(HttpStatus.OK)
-        .body(commentId + " 댓글이 삭제되었습니다.");
+        .body("댓글이 삭제되었습니다.");
   }
 
   @GetMapping("/comments/{commentId}")

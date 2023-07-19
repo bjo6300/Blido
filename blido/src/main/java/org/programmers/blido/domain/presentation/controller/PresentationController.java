@@ -49,7 +49,7 @@ public class PresentationController {
     presentationService.deletePresentation(presentationId);
 
     return ResponseEntity.status(HttpStatus.OK)
-        .body(presentationId + " 발표가 삭제되었습니다.");
+        .body("발표가 삭제되었습니다.");
   }
 
   @GetMapping("/presentations/{presentationId}")
