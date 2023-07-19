@@ -1,5 +1,5 @@
 export type PresentationType = {
-  id?: number;
+  id: number;
   title: string;
   startAt: string;
   endAt: string;
