@@ -1,7 +1,8 @@
-import { Box } from "@mui/joy";
-import { Outlet } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/joy";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 function App() {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -13,7 +14,33 @@ function App() {
         margin: "4rem auto",
       }}
     >
-      <h1>QnA</h1>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Typography sx={{ marginBottom: "1rem" }} level="h2">
+          QnA
+        </Typography>
+        {useLocation().pathname.includes("qna") && (
+          <Button
+            onClick={() => {
+              navigate("/");
+            }}
+            sx={{
+              position: "absolute",
+              right: 0,
+              top: 5,
+            }}
+          >
+            질문 리스트
+          </Button>
+        )}
+      </Box>
+
       <Outlet />
     </Box>
   );
