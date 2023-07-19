@@ -1,6 +1,7 @@
-import { Avatar, Box, Button, Checkbox, Typography } from "@mui/joy";
+import { Avatar, Box, Button, Checkbox, Input, Typography } from "@mui/joy";
 import { CommentType } from "../types/comment";
 import { deleteComment, putComment, putCommentCheck } from "../apis/comment";
+import { useState } from "react";
 
 type CommentBoxProps = {
   comment: CommentType;
@@ -8,6 +9,9 @@ type CommentBoxProps = {
 };
 
 function CommentBox({ comment, setComments }: CommentBoxProps) {
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+
   const handleCheck = async (id: number) => {
     const res = await putCommentCheck(id);
     setComments((prev) =>
@@ -23,7 +27,21 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
     setComments((prev) => prev.filter((comment) => comment.commentId !== id));
   };
 
-  const handleUpdate = async (id: number) => {};
+  const handleUpdate = async (id: number) => {
+    const form: CommentType = {
+      presentationId: comment.presentationId,
+      content: editContent,
+      writer: comment.writer,
+      isChecked: comment.isChecked,
+    };
+    const res = await putComment(id, form);
+    setComments((prev) =>
+      prev.map((comment) =>
+        comment.commentId === id ? { ...res.data } : comment
+      )
+    );
+    setIsUpdate((pre) => !pre);
+  };
 
   return (
     <Box
@@ -46,7 +64,38 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
           onChange={() => handleCheck(comment.commentId!)}
         />
       </Box>
-      <Typography level="body1">{comment.content}</Typography>
+      {isUpdate ? (
+        <Input
+          placeholder="Type in here…"
+          value={editContent}
+          onChange={(e) => setEditContent(e.target.value)}
+          variant="soft"
+          sx={{
+            "--Input-radius": "0px",
+            borderBottom: "2px solid",
+            borderColor: "neutral.outlinedBorder",
+            "&:hover": {
+              borderColor: "neutral.outlinedHoverBorder",
+            },
+            "&::before": {
+              border: "1px solid var(--Input-focusedHighlight)",
+              transform: "scaleX(0)",
+              left: 0,
+              right: 0,
+              bottom: "-2px",
+              top: "unset",
+              transition: "transform .15s cubic-bezier(0.1,0.9,0.2,1)",
+              borderRadius: 0,
+            },
+            "&:focus-within::before": {
+              transform: "scaleX(1)",
+            },
+          }}
+        />
+      ) : (
+        <Typography level="body1">{comment.content}</Typography>
+      )}
+
       <Box
         sx={{
           display: "flex",
@@ -55,15 +104,49 @@ function CommentBox({ comment, setComments }: CommentBoxProps) {
           alignSelf: "end",
         }}
       >
-        <Button color="primary">수정</Button>
-        <Button
-          color="danger"
-          onClick={() => {
-            handleDelete(comment.commentId!);
-          }}
-        >
-          삭제
-        </Button>
+        <Typography level="body2">
+          {comment.createdDate?.split("T")[0]}
+        </Typography>
+        {isUpdate ? (
+          <>
+            <Button
+              color="primary"
+              onClick={() => {
+                handleUpdate(comment.commentId!);
+              }}
+            >
+              완료
+            </Button>
+            <Button
+              color="danger"
+              onClick={() => {
+                setEditContent(comment.content);
+                setIsUpdate((pre) => !pre);
+              }}
+            >
+              취소
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              color="primary"
+              onClick={() => {
+                setIsUpdate((pre) => !pre);
+              }}
+            >
+              수정
+            </Button>
+            <Button
+              color="danger"
+              onClick={() => {
+                handleDelete(comment.commentId!);
+              }}
+            >
+              삭제
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
   );
