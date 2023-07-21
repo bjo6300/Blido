@@ -37,11 +37,11 @@ function PresentationListBox({
   return (
     <Box>
       <Typography sx={{ marginBottom: "0.5rem" }} level="h3">
-        질문 리스트
+        발표 리스트
       </Typography>
       {presentations.length === 0 ? (
         <Alert size="lg" sx={{ marginTop: "1rem" }}>
-          질문이 없습니다. 질문을 생성해주세요.
+          발표가 없습니다. 질문을 생성해주세요.
         </Alert>
       ) : (
         <List sx={{ gap: "1rem" }}>

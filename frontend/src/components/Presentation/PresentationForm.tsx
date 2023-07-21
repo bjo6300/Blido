@@ -26,7 +26,7 @@ function PresentationForm({
   return (
     <Stack spacing={3}>
       <FormControl required size="sm">
-        <FormLabel sx={{ fontSize: "2rem" }}>질문 생성</FormLabel>
+        <FormLabel sx={{ fontSize: "2rem" }}>발표 생성</FormLabel>
         <Input
           placeholder="제목 입력해주세요"
           name="title"

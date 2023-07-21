@@ -23,7 +23,7 @@ function App() {
         }}
       >
         <Typography sx={{ marginBottom: "1rem" }} level="h2">
-          QnA
+          Blido
         </Typography>
         {useLocation().pathname.includes("qna") && (
           <Button
@@ -36,7 +36,7 @@ function App() {
               top: 5,
             }}
           >
-            질문 리스트
+            발표 리스트
           </Button>
         )}
       </Box>
